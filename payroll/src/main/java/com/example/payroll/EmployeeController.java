@@ -35,6 +35,9 @@ public class EmployeeController {
 
     @PutMapping("/employees/{id}")
     Employee replaceEmployee(@RequestBody Employee newEmployee, @PathVariable Long id) {
+        // 요청으로 새로운 직원 객체와 pk를 받는다.
+        // 이후 pk로 직원검색을 한 후 값이 있으면 새로운 직원객체로 세이브를해준다
+        // 없으면 새로운 직원객체에 가져온 Pk 를 넣고 세이브를한다.
         return repository.findById(id)
                 .map(employee -> {
                     employee.setName(newEmployee.getName());
@@ -46,6 +49,7 @@ public class EmployeeController {
                     return repository.save(newEmployee);
                 });
     }
+
 
     @DeleteMapping("/employees/{id}")
     void deleteEmployee(@PathVariable Long id) {
