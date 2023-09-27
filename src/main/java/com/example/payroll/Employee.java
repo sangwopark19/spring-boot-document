@@ -7,12 +7,15 @@ import jakarta.persistence.Id;
 
 import java.util.Objects;
 
+//jpa에서 클래스가 엔티티임을 인식하게 해준다
 @Entity
 class Employee {
 
+    // pk값에 주석설정
     private @Id @GeneratedValue Long id;
     private String name;
     private String role;
+
 
     Employee() {}
 
