@@ -1,5 +1,7 @@
 package com.example.payroll;
 
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.server.reactive.WebFluxLinkBuilder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,6 +33,7 @@ public class EmployeeController {
     Employee one(@PathVariable Long id) {
         //EmployeeNotFoundException 은 직원을 조회했지만 찾을 수 없는 경우를 나타내는 데 사용되는 예외이다.
         return repository.findById(id).orElseThrow(() -> new EmployeeNotFoundException(id));
+
     }
 
     @PutMapping("/employees/{id}")
