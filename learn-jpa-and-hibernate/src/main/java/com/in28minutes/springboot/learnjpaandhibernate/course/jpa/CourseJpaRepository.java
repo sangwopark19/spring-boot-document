@@ -1,13 +1,14 @@
-package com.in28minutes.springboot.learnjpaandhibernate.course.jpa.Course;
+package com.in28minutes.springboot.learnjpaandhibernate.course.jpa;
 
 import com.in28minutes.springboot.learnjpaandhibernate.course.Course;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class JpaRepository {
+@Transactional
+public class CourseJpaRepository {
     @PersistenceContext
     private EntityManager entityManager;
 
