@@ -23,7 +23,7 @@ public class CourseCommandLineRunner implements CommandLineRunner {
         // 그전에는 직접만든 repository.insert를 사용했지만
         // springDataJpa 는 기본적으로 상속받은 메서드를 사용한다
         repository.save(new Course(1, "Learn Jpa!", "in28min"));
-        repository.save(new Course(2, "jpa now!", "in28min"));
+        repository.save(new Course(2, "jpanow!", "in28min"));
         repository.save(new Course(3, "asdfddd now!", "in28min"));
 
         repository.deleteById(1L);
@@ -31,6 +31,11 @@ public class CourseCommandLineRunner implements CommandLineRunner {
         System.out.println(repository.findById(2L));
         System.out.println(repository.findById(3L));
 
+        System.out.println(repository.findAll());
+        System.out.println(repository.count());
+
+        System.out.println(repository.findByAuthor("in28min"));
+        System.out.println(repository.findByName("jpanow!"));
     }
 
 
