@@ -33,4 +33,10 @@ public class UserDaoService {
         users.add(user);
         return user;
     }
+
+    public void deleteById(int id) {
+        Predicate<? super User> predicate = user -> user.getId().equals(id);
+        users.removeIf(predicate); // 주어진 아이디 값이 같다면 해당 사용자를 삭제
+    }
+
 }

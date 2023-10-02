@@ -30,8 +30,12 @@ public class UserResource {
         if (user == null) {
             throw new UserNotFoundException("id:" + id);
         }
-
         return user;
+    }
+
+    @DeleteMapping("/users/{id}")
+    public void deleteUser(@PathVariable int id) {
+        service.deleteById(id);
     }
 
     @PostMapping("/users")
@@ -51,4 +55,6 @@ public class UserResource {
         //그리고 매개변수로 uri 를 주면 해당 uri를 사용자에게 보내준다.
         return ResponseEntity.created(location).build();
     }
+
+
 }
