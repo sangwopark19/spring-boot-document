@@ -18,6 +18,7 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	//devtools 주석처리하면 에러페이지에서 추척로그가 안뜬다
 	//추가로 jar파일로 배포해서 운영할때는 devtools가 자동으로 비활성화되서 주석처리할 필요없다
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'

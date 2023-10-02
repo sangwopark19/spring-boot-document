@@ -1,10 +1,18 @@
 package com.in28minutes.rest.webservices.restfulwebservices.user;
 
+import jakarta.validation.constraints.Past;
+import jakarta.validation.constraints.Size;
+
 import java.time.LocalDate;
 
 public class User {
+
     private Integer id;
+    // 글자는 최소 2글자 이상이어야 한다
+    @Size(min = 2, message = "이름의 길이는 최소 2글자 이상이어야 합니다")
     private String name;
+    // @Past 가 달린 변수는 항상 과거 날짜여야한다
+    @Past(message = "생일은 과거의 날짜여야합니다")
     private LocalDate birthDate;
 
     public User(Integer id, String name, LocalDate birthDate) {
