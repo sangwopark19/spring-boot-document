@@ -18,6 +18,7 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	// hal explore json 데이터와 link들을 쉽게 보여주는 ui
 	implementation 'org.springframework.data:spring-data-rest-hal-explorer'
 	// 모니터링 의존성
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
