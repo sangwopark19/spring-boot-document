@@ -1,14 +1,20 @@
 package com.in28minutes.rest.webservices.restfulwebservices.user;
 
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 public class UserResource {
@@ -21,18 +27,31 @@ public class UserResource {
     }
 
     @GetMapping("/users")
-    public List<User> retrieveAllUsers() {
-        return service.findAll();
+    public List<EntityModel<User>> retrieveAllUsers() {
+        return service.findAll().stream().map(user -> {
+            // Java Stream 을 이용하여 각 user 객체의 엔티티 모델 생성
+            EntityModel<User> entityModel = EntityModel.of(user);
+            // WebMvcLinkBuilder 로 현재 컨트롤러의 메서드 uri를 가져옴
+            WebMvcLinkBuilder link = linkTo(methodOn(this.getClass()).retrieveUser(user.getId()));
+            // detail이라는 이름으로 링크를 entityModel에 추가
+            entityModel.add(link.withRel("detail"));
+            return entityModel;
+            // stream 의 Collectors.toList로 리스트로 변환
+        }).collect(Collectors.toList());
     }
 
+
     @GetMapping("/users/{id}")
-    public User retrieveUser(@PathVariable int id) {
+    public EntityModel<User> retrieveUser(@PathVariable int id) {
         User user = service.findById(id);
 
         if (user == null) {
             throw new UserNotFoundException("id:" + id);
         }
-        return user;
+        EntityModel<User> entityModel = EntityModel.of(user);
+        WebMvcLinkBuilder link = linkTo(methodOn(this.getClass()).retrieveAllUsers());
+        entityModel.add(link.withRel("all-users"));
+        return entityModel;
     }
 
     @DeleteMapping("/users/{id}")
