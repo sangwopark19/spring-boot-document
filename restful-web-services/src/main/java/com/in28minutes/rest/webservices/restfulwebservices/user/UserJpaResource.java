@@ -71,6 +71,13 @@ public class UserJpaResource {
         //그리고 매개변수로 uri 를 주면 해당 uri를 사용자에게 보내준다.
         return ResponseEntity.created(location).build();
     }
-
+    @GetMapping("/users/{id}/posts")
+    public List<Post> retrievePostsUser(@PathVariable int id) {
+        Optional<User> user = repository.findById(id);
+        if (user.isEmpty()) {
+            throw new UserNotFoundException("id: " + id);
+        }
+        return user.get().getPosts();
+    }
 
 }
