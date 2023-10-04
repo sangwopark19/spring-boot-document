@@ -1,23 +1,39 @@
 package com.in28minutes.rest.webservices.restfulwebservices.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
 
 import java.time.LocalDate;
+import java.util.List;
 
+@Entity(name = "user_details")
 public class User {
 
+    @Id
+    @GeneratedValue
     private Integer id;
     // @JsonProperty를 사용하면 json 응답의 이름을 커스터마이징할 수 있다.
+//    @JsonProperty("user_name")
     // 글자는 최소 2글자 이상이어야 한다
-    @JsonProperty("user_name")
     @Size(min = 2, message = "이름의 길이는 최소 2글자 이상이어야 합니다")
     private String name;
+    //    @JsonProperty("birth_date")
     // @Past 가 달린 변수는 항상 과거 날짜여야한다
-    @JsonProperty("birth_date")
     @Past(message = "생일은 과거의 날짜여야합니다")
     private LocalDate birthDate;
+
+    @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    private List<Post> posts;
+
+    protected User() {
+    }
 
     public User(Integer id, String name, LocalDate birthDate) {
         this.id = id;
